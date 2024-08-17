@@ -1,16 +1,16 @@
 
 
 window.onload = function(){
-    var w = window.innerWidth || 360;
-    var h = window.innerHeight || 500;
+    let w = window.innerWidth || 360;
+    let h = window.innerHeight || 500;
     
-    var tsw = (w > h) ? h : w;
+    let tsw = (w > h) ? h : w;
     
-    var sw = (tsw - 16)/8;
+    let sw = (tsw - 16)/8;
     
-    var container = document.getElementById("container");
-    for(var n = 0; n < 64; n++){
-        var square = document.createElement("div");
+     let container = document.getElementById("container");
+    for(let n = 0; n < 64; n++){
+        let square = document.createElement("div");
         square.classList.add("square");
         square.classList.add("s"+n);
         square.style.height = sw + 'px';
@@ -21,7 +21,7 @@ window.onload = function(){
         container.appendChild(square);
     }
 
-    var fonts = {
+    let fonts = {
         'k' : '&#9818;',
         'q' : '&#9819;',
         'r' : '&#9820',
@@ -37,15 +37,15 @@ window.onload = function(){
         
     }
     
-    var values = ['r','n','b','q','k','b','n','r','p','p','p','p','p','p','p','p',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'o','o','o','o','o','o','o','o','t','m','v','w','l','v','m','t'];
-    var ck = false;
-    var cr1 = false;
-    var cr2 = false;
-    var cl;
+    let values = ['r','n','b','q','k','b','n','r','p','p','p','p','p','p','p','p',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'o','o','o','o','o','o','o','o','t','m','v','w','l','v','m','t'];
+    let ck = false;
+    let cr1 = false;
+    let cr2 = false;
+    let cl;
     
-    var sqs = document.getElementsByClassName("square");
+    let sqs = document.getElementsByClassName("square");
 
-    for(var n = 0; n < 64; n++){
+    for(let n = 0; n < 64; n++){
         if(values[n] !== 0){
            sqs[n].innerHTML = fonts[values[n]];
         }
@@ -53,7 +53,7 @@ window.onload = function(){
     }
     
     function updateSquarecolor(){
-        for(var n = 0; n < 64; n++){
+        for(let n = 0; n < 64; n++){
             if(Math.floor(n/8)%2 === 0){
                 if(n%2 === 0){
                     sqs[n].style.background = '#9ff';
@@ -75,15 +75,15 @@ window.onload = function(){
     
     updateSquarecolor();
 
-    var moveable = false;
-    var moveTarget = "";
-    var moveScopes = [];
+    let moveable = false;
+    let moveTarget = "";
+    let moveScopes = [];
 
 
     function checkBlack(n,values){
-        var target = values[n];
-        var scopes = [];
-        var x = n;
+        let target = values[n];
+        let scopes = [];
+        let x = n;
        
         if(target === "o"){
             x -= 8;
@@ -541,9 +541,9 @@ window.onload = function(){
     }
 
     function checkWhite(n,values){
-        var target = values[n];
-        var scopes = [];
-        var x = n;
+        let target = values[n];
+        let scopes = [];
+        let x = n;
         if(target === "p"){
             x += 8;
             if("otmvlw".indexOf(values[x-1]) >= 0 && x%8 != 0){
@@ -665,6 +665,7 @@ window.onload = function(){
                     }
                 }
                 x = n;
+            
                 if(x%8 === 1){
                     x -= 17;
                     if(("otmvlw".indexOf(values[x]) >= 0 || values[x] === 0) && x < 64 && x >= 0){
@@ -854,6 +855,8 @@ window.onload = function(){
             }
             x = n;
             x += 7;
+
+            
             while(x < 64 && x%8 !== 7){
                 if(values[x] === 0){
                     scopes.push(x);
@@ -869,6 +872,7 @@ window.onload = function(){
             }
             x = n;
             x += 9;
+            
             while(x%8 != 0 && x%8 !== 0){
                 if(values[x] === 0){
                     scopes.push(x);
@@ -884,6 +888,7 @@ window.onload = function(){
             }
             x = n;
             x -= 7;
+            
             while(x%8 != 0){
                 if(values[x] === 0){
                     scopes.push(x);
@@ -911,14 +916,18 @@ window.onload = function(){
                 scopes.push(x);
             }
             x = n;
+            
             if(x%8 > 0){
                 x = n;
                 x -= 1;
+                
                 if(("otmvlw".indexOf(values[x]) >= 0 || values[x] === 0) && x < 64 && x >= 0){
                     scopes.push(x);
                 }
+                
                 x = n;
                 x -= 9;
+                
                 if(("otmvlw".indexOf(values[x]) >= 0 || values[x] === 0) && x < 64 && x >= 0){
                     scopes.push(x);
                 }
@@ -929,7 +938,9 @@ window.onload = function(){
                     scopes.push(x);
                 }
             }
+            
             x = n;
+            
             if(x%8 < 7){
                 x = n;
                 x += 1;
@@ -948,19 +959,20 @@ window.onload = function(){
                 }
             }
         }
+    
         if(scopes.length) return scopes;
     }
 
-    var myTurn = true;
+    let myTurn = true;
 
     function check(){
         if(myTurn){
-            var n = Number(this.classList[1].slice(1));
-            var target = values[n];
+            let n = Number(this.classList[1].slice(1));
+            let target = values[n];
 
-            var scopes = checkBlack(n,values) || [];
+            let scopes = checkBlack(n,values) || [];
 
-            var x = n;
+            let x = n;
 
             if(!moveable){
                 if(scopes.length > 0){
@@ -973,6 +985,7 @@ window.onload = function(){
                 }
             }
             else {
+                
                 if(moveScopes.indexOf(String(n)) >= 0){
                     var checkArr = [];
                     var saveKing = false;
@@ -983,10 +996,10 @@ window.onload = function(){
                     checkArr[n] = checkArr[moveTarget];
                     checkArr[moveTarget] = 0;
                     
-                    for(var y = 0; y < 64; y++){
+                    for(let y = 0; y < 64; y++){
                         if("prnbkq".indexOf(checkArr[y]) >= 0){
                             var checkScp = checkWhite(y,checkArr) || [];
-                            for(var z = 0; z < checkScp.length; z++){
+                            for(let z = 0; z < checkScp.length; z++){
                                 if(checkArr[checkScp[z]] === 'l'){
                                     if(!saveKing){
                                         alert('Save Your King');
@@ -1000,6 +1013,7 @@ window.onload = function(){
                     if(!saveKing){
                         values[n] = values[moveTarget];
                         values[moveTarget] = 0;
+                        
                         if(cl){
                             if(n === 62 && moveTarget === 60){
                                 values[63] = 0;
@@ -1010,6 +1024,7 @@ window.onload = function(){
                                 values[56] = 0;
                             }
                         }
+                        
                         if(moveTarget === 60){
                             ck = true;
                         }
@@ -1036,14 +1051,14 @@ window.onload = function(){
 
             updateSquarecolor();
             
-            for(var x = 0; x < 64; x++){
+            for(let x = 0; x < 64; x++){
                 sqs[x].innerHTML = fonts[values[x]];
                 if(values[x] === 0){
                     sqs[x].innerHTML = "";
                 }
             }
 
-            for(var x = 0; x < scopes.length; x++){
+            for(let x = 0; x < scopes.length; x++){
                 sqs[scopes[x]].style.background = "#f45";//.classList.add("scope");
             //    alert(scopes)
             }
@@ -1051,26 +1066,27 @@ window.onload = function(){
     }
 
 
-    var arr = [];
+    let arr = [];
 
     function chooseTurn(){
-        var approved = [];
-        var actions = [];
-        var effects = [];
+        let approved = [];
+        let actions = [];
+        let effects = [];
 
 
-        for(var n = 0; n < 64; n++){
+        for(let n = 0; n < 64; n++){
             if("prnbqk".indexOf(values[n]) >= 0){
-                var scopes = checkWhite(n,values) || [];
-                for(var x = 0; x < scopes.length; x++){
-                    var tmp = []//values.join(',').split(',');
-                    for(var xx = 0; xx < 64; xx++){
+                let scopes = checkWhite(n,values) || [];
+                
+                for(let x = 0; x < scopes.length; x++){
+                    let tmp = []//values.join(',').split(',');
+                    for(let xx = 0; xx < 64; xx++){
                         tmp[xx] = values[xx]
                     }
-                    var effect = 0;
-                    var action = Math.random()*3;
+                    let effect = 0;
+                    let action = Math.random()*3;
                     //Action value
-                    var actionValue = tmp[scopes[x]];
+                    let actionValue = tmp[scopes[x]];
                     if(actionValue === "l"){
                         action = 100 + Math.random()*3;
                     }
@@ -1092,11 +1108,11 @@ window.onload = function(){
                     //Effect value
                     tmp[scopes[x]] = tmp[n];
                     tmp[n] = 0;
-                    for(var y = 0; y < 64; y++){
+                    for(let y = 0; y < 64; y++){
                         if("otmvlw".indexOf(values[y]) >= 0){
-                            var tmpScp = checkBlack(y,tmp) || [];
-                            for(var z = 0; z < tmpScp.length; z++){
-                                var effectValue = tmp[tmpScp[z]];
+                            let tmpScp = checkBlack(y,tmp) || [];
+                            for(let z = 0; z < tmpScp.length; z++){
+                                let effectValue = tmp[tmpScp[z]];
                                 if(effectValue == "k"){
                                     if(effect < 100){
                                         effect = 100;
@@ -1143,7 +1159,8 @@ window.onload = function(){
 
         //alert(actions);
 
-        var bestEffect = Math.min.apply(null,effects);
+        let bestEffect = Math.min.apply(null,effects);
+        
         //alert(bestEffect);
         if(bestEffect >= 100){
             alert("You Win");
@@ -1152,12 +1169,12 @@ window.onload = function(){
         },100);
         }
 
-        var tmpA = [];
-        var tmpB = [];
-        var tmpC = [];
-        var bestMove = "";
+        let tmpA = [];
+        let tmpB = [];
+        let tmpC = [];
+        let bestMove = "";
 
-        for(var n = 0; n < effects.length; n++){
+        for(let n = 0; n < effects.length; n++){
             if(effects[n] === bestEffect){
                 tmpA.push(actions[n]);
                 tmpB.push(approved[n]);
@@ -1172,6 +1189,7 @@ window.onload = function(){
         if(bestMove){
             values[Number(bestMove.split("-")[1])] = values[Number(bestMove.split("-")[0])];
             values[Number(bestMove.split("-")[0])] = 0;
+            
             if(values[Number(bestMove.split("-")[1])] === "p" && Number(bestMove.split("-")[1]) >= 56){
                 values[Number(bestMove.split("-")[1])] = "q";
             }
@@ -1179,7 +1197,7 @@ window.onload = function(){
             sqs[bestMove.split("-")[1]].style.background = '#aaf';
             sqs[bestMove.split("-")[0]].style.background = '#aaf';
 
-            for(var x = 0; x < 64; x++){
+            for(let x = 0; x < 64; x++){
                 //sqs[x].style.background = "#afa"//classList.add("scope");
                 sqs[x].innerHTML = fonts[values[x]];
                 if(values[x] === 0){
