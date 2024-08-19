@@ -8,7 +8,9 @@ window.onload = function(){
     
     let sw = (tsw - 16)/8;
     
-     let container = document.getElementById("container");
+    let container = document.getElementById("container");
+
+    
     for(let n = 0; n < 64; n++){
         let square = document.createElement("div");
         square.classList.add("square");
