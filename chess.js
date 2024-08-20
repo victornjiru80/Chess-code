@@ -1,6 +1,6 @@
 
 
-window.onload = function(){
+let playChess = function(){
     let w = window.innerWidth || 360;
     let h = window.innerHeight || 500;
     
@@ -716,7 +716,7 @@ window.onload = function(){
                 }
             }
         } 
-        else if (target === "b"){
+         if (target === "b"){
             x = n;
             x -= 9;
             while(x >= 0 && x%8 !== 7){
@@ -1212,6 +1212,6 @@ window.onload = function(){
             //alert('You Win');
         }
     }
-}
+
 //chooseTurn();
 
