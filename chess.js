@@ -1,5 +1,4 @@
 
-
 let playChess = function(){
     let w = window.innerWidth || 360;
     let h = window.innerHeight || 500;
